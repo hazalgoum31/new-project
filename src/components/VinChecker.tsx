@@ -1,7 +1,15 @@
 import { useState, type FormEvent } from 'react'
 import { decodeVin, type VinResult } from '../vin'
 import { AGENCIES, approvalStatus } from '../data'
-import type { Inspection } from '../store'
+import { isDemo, type Inspection } from '../store'
+
+function DemoBadge() {
+  return (
+    <span className="inline-flex items-center rounded-full border border-brass bg-brass/10 px-2.5 py-0.5 text-xs font-bold text-ink">
+      بيانات تجريبية
+    </span>
+  )
+}
 
 const resultStyle: Record<Inspection['result'], string> = {
   'مطابق': 'border-pine text-pine',
@@ -62,7 +70,10 @@ export default function VinChecker({ inspections, onBook }: { inspections: Inspe
                 {last.result}
               </div>
             )}
-            <p className="vin-mono text-sm text-ink/60">{res.vin}</p>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="vin-mono text-sm text-ink/60">{res.vin}</p>
+              {history.some(isDemo) && <DemoBadge />}
+            </div>
             <h2 className="mt-1 font-display text-2xl">{res.make} {res.year ? `· ${res.year}` : ''}</h2>
             <dl className="mt-4 grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
               <div><dt className="text-ink/60">بلد التصنيع</dt><dd className="font-semibold">{res.country}</dd></div>
@@ -95,7 +106,7 @@ export default function VinChecker({ inspections, onBook }: { inspections: Inspe
                     <li key={h.id} className="relative">
                       <span className="absolute -right-[27px] top-2 h-3 w-3 rounded-full bg-pine" />
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <span className="font-semibold">{h.date}</span>
+                        <span className="flex items-center gap-2 font-semibold">{h.date}{isDemo(h) && <DemoBadge />}</span>
                         <span className={`rounded-full border px-3 py-0.5 text-sm font-semibold ${resultStyle[h.result]}`}>{h.result}</span>
                       </div>
                       <p className="text-sm text-ink/70">{ag?.name} — {h.mileage.toLocaleString('ar-DZ')} كم{st && st.tone === 'bad' ? ' — اعتماد الوكالة منتهٍ اليوم' : ''}</p>

@@ -43,6 +43,8 @@ export function useStored<T>(key: string, fallback: T) {
   return [value, setValue] as const
 }
 
+export const isDemo = (i: Inspection) => /^s\d+$/.test(i.id)
+
 export const SEED_INSPECTIONS: Inspection[] = [
   { id: 's1', vin: 'VF1RFB00X56123456', agencyId: 'a1', date: '2023-04-12', mileage: 84200, result: 'مطابق', vinPlateMatch: true, notes: 'لا ملاحظات.' },
   { id: 's2', vin: 'VF1RFB00X56123456', agencyId: 'a4', date: '2024-04-20', mileage: 97100, result: 'مطابق بشروط', vinPlateMatch: true, notes: 'تآكل في ممتص الصدمات الأمامي، يلزم الإصلاح خلال شهر.' },
