@@ -1,10 +1,17 @@
-/* Global styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+html, body, #root { min-height: 100%; }
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  background: #F4F6F5;
+  color: #10231F;
+  font-size: 16px;
+  line-height: 1.7;
 }
+:focus-visible { outline: 3px solid #0F6B4A; outline-offset: 2px; border-radius: 6px; }
+.vin-mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; direction: ltr; unicode-bidi: isolate; letter-spacing: .08em; }
+@keyframes stamp { 0% { transform: scale(1.6) rotate(-12deg); opacity: 0 } 100% { transform: scale(1) rotate(-6deg); opacity: 1 } }
+.stamp { animation: stamp .45s cubic-bezier(.2,.8,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .stamp { animation: none } * { transition: none !important } }
